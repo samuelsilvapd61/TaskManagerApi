@@ -3,7 +3,7 @@ package silva.oliveira.samuel.taskmanager.domain.request;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import silva.oliveira.samuel.taskmanager.utils.TaskStatusEnum;
+import silva.oliveira.samuel.taskmanager.domain.entity.TaskStatus;
 
 /**
  * Classe de request da tarefa.
@@ -15,7 +15,7 @@ public class TaskRequest {
   private String name;
   @NotEmpty
   private String description;
-  private TaskStatusEnum status;
+  private TaskStatus taskStatus = new TaskStatus();
   @NotNull
   private Long taskOwnerId;
 

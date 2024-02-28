@@ -1,4 +1,4 @@
-package silva.oliveira.samuel.taskmanager.utils;
+package silva.oliveira.samuel.taskmanager.utils.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
