@@ -9,6 +9,7 @@ import silva.oliveira.samuel.taskmanager.domain.request.TaskUpdateRequest;
 import silva.oliveira.samuel.taskmanager.domain.response.TaskResponse;
 import silva.oliveira.samuel.taskmanager.repository.TaskRepository;
 import silva.oliveira.samuel.taskmanager.service.TaskService;
+import silva.oliveira.samuel.taskmanager.service.UserService;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class TaskServiceImp implements TaskService {
   private TaskRepository taskRepository;
   @Autowired
   private TaskConverter taskConverter;
+  @Autowired
+  private UserService userService;
 
   @Override
   public List<TaskResponse> getTasks(Long taskOwnerId, Pageable page) {
@@ -32,11 +35,9 @@ public class TaskServiceImp implements TaskService {
 
   @Override
   public void addTask(TaskRequest request) {
-    if (taskOwnerExists(request.getTaskOwnerId())) {
-      var task = taskConverter.buildNewTask(request);
-      taskRepository.save(task);
-    }
-    // TODO - Retornar erro caso o usuário não exista
+    var user = userService.getUserById(request.getTaskOwnerId());
+    var task = taskConverter.buildNewTask(request);
+    taskRepository.save(task);
   }
 
   @Override
@@ -60,11 +61,6 @@ public class TaskServiceImp implements TaskService {
       throw new RuntimeException("Essa tarefa não existe");
     }
 
-  }
-
-  private boolean taskOwnerExists(Long taskOwnerId) {
-    // TODO - Buscar o usuário no banco
-    return true;
   }
 
 }
